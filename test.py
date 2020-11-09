@@ -1,21 +1,18 @@
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-import pandas as pd
-import sklearn as sk
-import nltk
-import math
-import re
+import vektor as v
 
-stop_words = set(stopwords.words("english"))
+test1 = "I! don't like to playing around... I prefer to lay and lay and lay around!!"
+test2 = "I.... dont like to lay around and lay around and lay around,,, I want to play and play and play around"
 
-test1 = "I! don't like to play around... I prefer to lay around!!"
-test2 = "I.... dont like to lay around,,, I want to play around"
+arrkalimat = [v.stem(test1), v.stem(test2)]
+print("arrkalimat: ", arrkalimat)
 
+print(v.setkata(arrkalimat))
+matrix = v.wordcount_matx(arrkalimat)
 
-clean1 = re.sub(r'[^\w\s]','', test1).lower()
+test1v = matrix[0]
+print(v.tf(test1v))
 
-test1_tokens = word_tokenize(clean1)
-print(test1_tokens)
+# df = v.pd.DataFrame(matrix)
+# print(df)
 
-filtered_sentence = [w for w in test1_tokens if not w in stop_words]
-print(filtered_sentence)
+print(v.idfvect(matrix))
