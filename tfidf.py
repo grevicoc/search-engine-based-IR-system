@@ -2,7 +2,6 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pandas as pd
-import sklearn as sk
 import math
 import re
 
@@ -50,6 +49,8 @@ def wordcount_matx(arrkalimat):
     return [wordcount(kal, keyset) for kal in arrkalimat]
 
 def tf(wordcount_vect):
+    """output dict vector dengan nilai tiap kolom berupa nilai TF pada dokumen
+    wordcount_vect"""
     tf_dict = dict.fromkeys(wordcount_vect.keys())
     nkata = sum(wordcount_vect.values())
     for kata in wordcount_vect.keys():
@@ -68,7 +69,6 @@ def idfvect(wordcount_arr):
     idfvect = dict.fromkeys(wordcount_arr[0].keys(), 0)
 
     for kalimat in wordcount_arr:
-        print("kalimat: ", kalimat)
         for kata, count in kalimat.items():
             if (count > 0):
                 idfvect[kata] += 1
@@ -76,8 +76,6 @@ def idfvect(wordcount_arr):
     n_kalimat = len(wordcount_arr)
 
     for kata, count in idfvect.items():
-        idfvect[kata] = math.log((n_kalimat) / (count))
+        idfvect[kata] = math.log((1 + n_kalimat) / (1 + count)) + 1
 
     return idfvect
-
-
