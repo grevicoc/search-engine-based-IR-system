@@ -1,6 +1,8 @@
 from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+import numpy as np
+import operator
 import pandas as pd
 import math
 import re
@@ -79,3 +81,26 @@ def idfvect(wordcount_arr):
         idfvect[kata] = math.log((1 + n_kalimat) / (1 + count)) + 1
 
     return idfvect
+
+def tf_idf(tf, idf):
+    res = dict.fromkeys(tf.keys())
+    for kolom in res.keys():
+        res[kolom] = tf[kolom] * idf[kolom]
+
+    return res
+
+def cosine_sim(tfidf1,tfidf2): #cosine sim dari 2 dict tfidf 
+    cosinesim = 0
+    c = {key : tfidf1[key] * tfidf2.get(key,0) for key in tfidf1.keys()}
+    dot = sum(c.values()) 
+    sq1 ={}
+    sq2 ={}
+    sq1 = {key: value ** 2 for key, value in tfidf1.items()}
+    sq2 = {key: value ** 2 for key, value in tfidf2.items()}
+    lgt = math.sqrt(sum(sq1.values())) * math.sqrt(sum(sq2.values()))
+    if(lgt!=0):
+        cosinesim = dot/lgt
+    
+    return cosinesim
+
+    
