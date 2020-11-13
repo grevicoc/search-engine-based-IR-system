@@ -1,35 +1,52 @@
 from bs4 import BeautifulSoup
 import requests
 
-source = requests.get('https://www.kompasiana.com/tag/2020').text
+listMainArticle = []
 
-soup = BeautifulSoup(source, 'html.parser')
+#Source Webscraping 1: Jakarta Post dengan cakupan SE Asia
+source1 = requests.get('https://www.thejakartapost.com/seasia').text
 
-artikel_raw = soup.find('div', {'id':'index_tag'})     #ini dia cuma bakal nemuin container utamanya dan disimpan di variable artikel_raw
+soupJakartaPost1 = BeautifulSoup(source1, 'html.parser')
 
-konten_artikel = artikel_raw.find_all('div', attrs={'class', 'timeline--item'})     #jadi bisa dibilang artikel_raw itu kayak container utama, dan di sini kita masukkin masing-masing konten dari container utama itu ke list konten_artikel
+#Source Webscraping 2: Jakarta Post dengan cakupan Dunia
+source2 = requests.get('https://www.thejakartapost.com/news/world').text
 
-list_of_artikel = []
+soupJakartaPost2 = BeautifulSoup(source2, 'html.parser')
 
-for konten in konten_artikel:
-    penulis_artikel = konten.find('div', attrs={'class', 'user-box col-lg-12 col-md-12 col-sm-12 col-xs-12'}).find('a').text
+#membuat list berisi masing-masing berita
 
-    tanggal_artikel = konten.find('div', attrs={'class', 'user-box col-lg-12 col-md-12 col-sm-12 col-xs-12'}).find('div').text
+listOfArticleJakartaPost = soupJakartaPost1.find_all('div', attrs={'class', 'listNews whtPD columns'})              
+
+listOfArticleJakartaPost.extend(soupJakartaPost2.find_all('div', attrs={'class', 'listNews whtPD columns'}))
+
+for article in listOfArticleJakartaPost:
     
-    konten_artikel = konten.find('h2').find('a').get('href')    
+    #ekstrak judul
+    judulArtikel = article.find('h2', attrs={'class', 'titleNews'})
+    unWantedTitle = judulArtikel.find('div')        #karena di beberapa judul ada kata PREMIUM dan dia hanya bisa diakses kalo punya akun, makanya berita yang PREMIUM di bawah ga gue masukkin
+    if not unWantedTitle:
+        #ekstrak link
+        linkArtikel = article.find('div', attrs={'class', 'imageNews'}).find('a').get('href')
 
-    tempDict = {'penulis' : penulis_artikel, 'tanggal artikel' : tanggal_artikel, 'link' : konten_artikel}
+        #ekstrak kalimat pertama
+        sourceArtikel = requests.get(linkArtikel).text
+        soupArtikel = BeautifulSoup(sourceArtikel, 'html.parser')
+        kalimatPertama = soupArtikel.find('div', attrs={'class', 'col-md-10 col-xs-12 detailNews'}).find('p').text 
 
-    list_of_artikel.append(tempDict)
+        #data tiap berita dibagi menjadi judul, link, dan kalimat pertamanya lalu dimasukkin ke dict
+        tempDict = {'judul':judulArtikel, 'link':linkArtikel, 'kalimat':kalimatPertama}
 
-def isiKonten(link):                                #fungsi untuk ngambil isi dari link
-    source = requests.get(link).text                
+        listMainArticle.append(tempDict)
 
-    soup = BeautifulSoup(source, 'html.parser')
+#fungsi untuk ngambil isi dari link
+def isiKonten(link):                                
+    sourceKonten = requests.get(link).text                
 
-    konten = soup.find('div', attrs={'class', 'read-content'}).find_all('p')        #di sini kita ambil semua isi konten dari link tersebut dengan cara semua tag html <p> diambil dan disimpan di konten
+    soupKonten = BeautifulSoup(sourceKonten, 'html.parser')
 
-    for  paragraf in konten:                        #setelah itu, karena tiap index di konten menandakan dia paragraf ke berapa, makanya gue buat loop biar nanti bisa diatur per paragraf
-        print(paragraf.text + '\n')
+    konten = soupKonten.find('div', attrs={'class', 'col-md-10 col-xs-12 detailNews'})
+    unWantedKonten = konten.find('div', attrs={'class', 'topicRelated'})  
+    unWantedKonten.extract()  
 
-isiKonten(list_of_artikel[0]['link'])
+    return konten.text
+    
