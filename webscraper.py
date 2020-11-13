@@ -31,12 +31,13 @@ for article in listOfArticleJakartaPost:
         #ekstrak kalimat pertama
         sourceArtikel = requests.get(linkArtikel).text
         soupArtikel = BeautifulSoup(sourceArtikel, 'html.parser')
-        kalimatPertama = soupArtikel.find('div', attrs={'class', 'col-md-10 col-xs-12 detailNews'}).find('p').text 
+        kalimatPertama = soupArtikel.find('div', attrs={'class', 'col-md-10 col-xs-12 detailNews'}).find('p')
 
         #data tiap berita dibagi menjadi judul, link, dan kalimat pertamanya lalu dimasukkin ke dict
-        tempDict = {'judul':judulArtikel, 'link':linkArtikel, 'kalimat':kalimatPertama}
+        tempDict = {'judul':judulArtikel.text.strip(), 'link':linkArtikel, 'kalimat':kalimatPertama.text}       #.text untuk mengextract bagian berisi text dari tag element, sedangkan .strip untuk menghilangkan \n pada hasil extract text
 
         listMainArticle.append(tempDict)
+
 
 #fungsi untuk ngambil isi dari link
 def isiKonten(link):                                
@@ -46,7 +47,10 @@ def isiKonten(link):
 
     konten = soupKonten.find('div', attrs={'class', 'col-md-10 col-xs-12 detailNews'})
     unWantedKonten = konten.find('div', attrs={'class', 'topicRelated'})  
-    unWantedKonten.extract()  
+    if unWantedKonten:
+        unWantedKonten.extract()
 
     return konten.text
+
+
     

@@ -1,9 +1,13 @@
 from tfidf import *
+from webscraper import *
+
 
 # testcorpus contoh doang, kalo banyak dokumen bisa makan memori, jadi bisa
 # dibikin fungsi content(link) dari webscraping mungkin buat ngambil content nya biar
 # ga harus nyimpen terus terusan, bisa juga diadain keyvalue kalimat pertama buat 
 # nanti ke website
+
+'''
 testcorpus = [
     {
         "link": "test1.com",
@@ -26,24 +30,28 @@ testcorpus = [
         "content":"walk love hate zara"
     }
 ]
+'''
 
+query = "covid-19 vaccine"
 
+#memasukkan hasil stemming per dokumen ke dalam list stemmed_content
+stemmed_content = [stem(isiKonten(dokumen['link'])) for dokumen in listMainArticle] 
 
-query = "walk love hate zara"
-
-stemmed_content = [stem(dokumen["content"]) for dokumen in testcorpus]
 stemmed_content.append(stem(query))
 #print(stemmed_content)
+
 kolom_vect = setkata(stemmed_content)
 del stemmed_content[-1]
+
 
 contents_wcount = [wordcount(content, kolom_vect) for content in stemmed_content]
 idf_vect = idfvect(contents_wcount)
 #print(contents_wcount)
 
 vect_query = tf(wordcount(stem(query), kolom_vect))
-print(idf_vect)
-print(tf_idf(vect_query, idf_vect))
+#print(idf_vect)
+#print(tf_idf(vect_query, idf_vect))
+
 
 #tfidf1 = tf_idf(vect_query, idf_vect)
 #print(sum(tfidf1.values()))
@@ -56,17 +64,18 @@ print(tf_idf(vect_query, idf_vect))
 
 # Testing cosinesim
 
-cos = [0 for i in range(len(testcorpus))]
-ti  = [0 for i in range(len(testcorpus))]
+
+cos = [0 for i in range(len(listMainArticle))]
+ti  = [0 for i in range(len(listMainArticle))]
 tiq = tf_idf(vect_query,idf_vect)
 
-for i in range(len(testcorpus)):
+for i in range(len(listMainArticle)):
     tfd = tf(contents_wcount[i])
     ti[i] = tf_idf(tfd,idf_vect)
     cos[i] = cosine_sim(tiq,ti[i])
     print(cos[i])
-    testcorpus[i].update({"similarity" : cos[i]})
+    listMainArticle[i].update({"similarity" : cos[i]})
 
-testcorpus = sorted(testcorpus, key = lambda i: i['similarity'],reverse=True)
-print(testcorpus)
+listMainArticle = sorted(listMainArticle, key = lambda i: i['similarity'],reverse=True)
+print(listMainArticle)
 
