@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, abort
 from wtforms import Form, StringField, validators
 from pathlib import Path
-from mainjson import getsorted
+from pitonan.mainjson import getsorted
 
 app = Flask(__name__)
 app.config["TXT_PATH"] = str(Path('data').absolute())

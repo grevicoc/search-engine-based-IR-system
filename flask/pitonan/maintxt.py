@@ -1,18 +1,35 @@
-from tfidf import *
-import json
+from pathlib import Path
+from pitonan.tfidf import *
+
+def get_localcorpus():
+    corpus = []
+    data_folder = Path('data/txt/')
+    files = data_folder.glob('*.txt')
+
+    i = 1
+    for file in sorted(files):
+        doc = {
+            'judul': "file" + str(i),
+            'link': file.name,
+        }
+        with file.open() as f:
+            doc['kalimat'] = f.readline(100) + '...'
+        corpus.append(doc)
+        i += 1
+    
+    return corpus
+
+def get_localcontent(doc):
+    file = Path('data/' + doc['link'])
+    with file.open() as f:
+        content = f.read()
+    return content.replace('\n', ' ')
 
 def getsorted(query):
-
-    #Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
-    with open('data/json/dbDokumen.txt') as fin:
-        dbDokumen = json.load(fin)
-
-    #Membaca dbArticle.txt untuk mendapatkan data berupa judul, link, dan kalimat pertama dari masing-masing artikel
-    with open('data/json/dbArticle.txt') as fin:
-        dbArticle = json.load(fin)
+    dbArticle = get_localcorpus()
 
     #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
-    stemmed_content = [stem(dokumen) for dokumen in dbDokumen] 
+    stemmed_content = [stem(get_localcontent(dokumen)) for dokumen in dbArticle] 
 
     stemmed_content.append(stem(query))
 
@@ -42,8 +59,3 @@ def getsorted(query):
     dbArticle = sorted(dbArticle, key = lambda i: i['similarity'],reverse=True)
 
     return dbArticle
-
-
-
-
-
