@@ -1,5 +1,5 @@
 from tfidf import *
-from webscraper import *
+import json
 
 
 # testcorpus contoh doang, kalo banyak dokumen bisa makan memori, jadi bisa
@@ -7,35 +7,18 @@ from webscraper import *
 # ga harus nyimpen terus terusan, bisa juga diadain keyvalue kalimat pertama buat 
 # nanti ke website
 
-'''
-testcorpus = [
-    {
-        "link": "test1.com",
-        "content": "poop Sometimes it is better to just walk away from things and go back to them later when you’re in a better frame of mind."
-    },
-    {
-        "link": "test2.com",
-        "content": "poop He was an introvert that extroverts seemed to love."
-    },
-    {
-        "link": "test3.com",
-        "content": "poop He didn't heed the warning and it had turned out surprisingly well."
-    },
-    {
-        "link": "test4.com",
-        "content": "poop He hated that he loved what she hated about hate."
-    },
-    {
-        "link":"test5.com",
-        "content":"walk love hate zara"
-    }
-]
-'''
-
 query = "covid-19 vaccine"
 
+#Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
+with open('dbDokumen.txt') as fin:
+    dbDokumen = json.load(fin)
+
+#Membaca dbArticle.txt untuk mendapatkan data berupa judul, link, dan kalimat pertama dari masing-masing artikel
+with open('dbArticle.txt') as fin:
+    dbArticle = json.load(fin)
+
 #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
-stemmed_content = [stem(isiKonten(dokumen['link'])) for dokumen in listMainArticle] 
+stemmed_content = [stem(dokumen) for dokumen in dbDokumen] 
 
 stemmed_content.append(stem(query))
 #print(stemmed_content)
@@ -65,17 +48,17 @@ vect_query = tf(wordcount(stem(query), kolom_vect))
 # Testing cosinesim
 
 
-cos = [0 for i in range(len(listMainArticle))]
-ti  = [0 for i in range(len(listMainArticle))]
+cos = [0 for i in range(len(dbArticle))]
+ti  = [0 for i in range(len(dbArticle))]
 tiq = tf_idf(vect_query,idf_vect)
 
-for i in range(len(listMainArticle)):
+for i in range(len(dbArticle)):
     tfd = tf(contents_wcount[i])
     ti[i] = tf_idf(tfd,idf_vect)
     cos[i] = cosine_sim(tiq,ti[i])
     print(cos[i])
-    listMainArticle[i].update({"similarity" : cos[i]})
+    dbArticle[i].update({"similarity" : cos[i]})
 
-listMainArticle = sorted(listMainArticle, key = lambda i: i['similarity'],reverse=True)
-print(listMainArticle)
+dbArticle = sorted(dbArticle, key = lambda i: i['similarity'],reverse=True)
+print(dbArticle)
 
