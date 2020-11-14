@@ -11,7 +11,9 @@
 {% for doc in docs %}
 <div class="container">
     <h3>{{ doc.judul }}</h3>
-    <p>{{ doc.sample }}</p>
+    <a href={{doc.link}}><h5>{{ doc.link }}</h5></a>
+    <p>{{ doc.kalimat }}</p>
+
 </div>
 {% endfor %}
 

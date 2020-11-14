@@ -1,12 +1,6 @@
 from tfidf import *
 import json
 
-
-# testcorpus contoh doang, kalo banyak dokumen bisa makan memori, jadi bisa
-# dibikin fungsi content(link) dari webscraping mungkin buat ngambil content nya biar
-# ga harus nyimpen terus terusan, bisa juga diadain keyvalue kalimat pertama buat 
-# nanti ke website
-
 query = "covid-19 vaccine"
 
 #Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
