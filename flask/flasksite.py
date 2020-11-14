@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, abort
 from wtforms import Form, StringField, validators
+from pathlib import Path
 
 app = Flask(__name__)
+app.config["TXT_PATH"] = str(Path('data').absolute())
 
 # kalo mau ngerun install Flask dulu terus "python flasksite.py" di terminal
 def testquery(query):
@@ -38,6 +40,13 @@ def search():
         return render_template('search.html', form=form, docs=testquery(form.query.data))
     else:
         return redirect('/')
+
+@app.route('/txt/<txt_name>')
+def txt(txt_name):
+    try:
+        return send_from_directory(app.config["TXT_PATH"], filename=txt_name, as_attachment=False)
+    except FileNotFoundError:
+        abort(404)
 
 
 
