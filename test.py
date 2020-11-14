@@ -62,7 +62,7 @@ vect_query = tf(wordcount(stem(query), kolom_vect))
 # yang dibandingin sama vect_query, baru nilai cosine sim itu dijadiin data di dalem
 # dictionary tiap dokumen, dari data itu di sort
 
-# Testing cosinesim
+# Mencari cosine sim
 
 
 cos = [0 for i in range(len(listMainArticle))]
@@ -82,8 +82,22 @@ print(listMainArticle)
 kolque = setkata([stem(query)])
 df = pd.DataFrame.from_records(contents_wcount)
 df = df[df.columns.intersection(list(kolque))]
-df = df
-print(df.rename(index=lambda s:'D'+str(s)))
+df = df.rename(index=lambda s:'D'+str(s))
+print(df)
+html = '''
+<html>
+  <head><title>HTML Pandas Dataframe with CSS</title></head>
+  <link rel="stylesheet" type="text/css" href="df_style.css"/>
+  <body>
+    {table}
+  </body>
+</html>.
+'''
+pd.set_option('colheader_justify', 'center')
+text_file = open("pup.html", "w")
+text_file.write(html.format(table=df.to_html(classes='mystyle')))
+text_file.close()
+
 
 
 

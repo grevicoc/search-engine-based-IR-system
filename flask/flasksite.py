@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from wtforms import Form, StringField, validators
+
 app = Flask(__name__)
 
 # kalo mau ngerun install Flask dulu terus "python flasksite.py" di terminal
