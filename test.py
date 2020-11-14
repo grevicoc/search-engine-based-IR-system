@@ -79,3 +79,13 @@ for i in range(len(listMainArticle)):
 listMainArticle = sorted(listMainArticle, key = lambda i: i['similarity'],reverse=True)
 print(listMainArticle)
 
+kolque = setkata([stem(query)])
+df = pd.DataFrame.from_records(contents_wcount)
+df = df[df.columns.intersection(list(kolque))]
+df = df
+print(df.rename(index=lambda s:'D'+str(s)))
+
+
+
+
+
