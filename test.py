@@ -60,7 +60,6 @@ for i in range(len(dbArticle)):
     dbArticle[i].update({"similarity" : cos[i]})
 
 dbArticle = sorted(dbArticle, key = lambda i: i['similarity'],reverse=True)
-print(dbArticle)
 
 kolque = setkata([stem(query)])
 df = pd.DataFrame.from_records(contents_wcount)
