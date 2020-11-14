@@ -1,29 +1,16 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, send_from_directory, abort
 from wtforms import Form, StringField, validators
 from pathlib import Path
+from mainjson import getsorted
 
 app = Flask(__name__)
 app.config["TXT_PATH"] = str(Path('data').absolute())
 
-# kalo mau ngerun install Flask dulu terus "python flasksite.py" di terminal
-def testquery(query):
-    return [
-        {
-            "judul": "p",
-            "sample": "pepepepe",
-        },
-        {
-            "judul": "po",
-            "sample": "popopoppop",
-        },
-        {
-            "judul": query,
-            "sample": query + query + query
-        }
-    ]
-
 class searchForm(Form):
     query = StringField('Nyari apa om', [validators.Length(min=1)])
+
+# kalo mau ngerun install Flask dulu terus "python flasksite.py" di terminal
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -37,7 +24,7 @@ def home():
 def search():
     form = searchForm(request.args)
     if request.method == 'GET' and form.validate():
-        return render_template('search.html', form=form, docs=testquery(form.query.data))
+        return render_template('search.html', form=form, docs=getsorted(form.query.data))
     else:
         return redirect('/')
 

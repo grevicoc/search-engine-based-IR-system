@@ -3,7 +3,7 @@ import os
 
 def get_localcorpus():
     corpus = []
-    data_folder = Path('data/')
+    data_folder = Path('data/txt/')
     files = data_folder.glob('*.txt')
 
     i = 1

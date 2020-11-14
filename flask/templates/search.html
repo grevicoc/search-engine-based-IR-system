@@ -10,8 +10,10 @@
 </form>
 {% for doc in docs %}
 <div class="container">
-    <h3>{{ doc.judul }}</h3>
-    <p>{{ doc.sample }}</p>
+    <h4>{{ doc.judul }}</h4>
+    <a href={{doc.link}}><p class="text-truncate mb-1">{{ doc.link }}</p></a>
+    <p>{{ doc.kalimat }}</p>
+
 </div>
 {% endfor %}
 
