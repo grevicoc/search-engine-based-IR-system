@@ -13,19 +13,19 @@ def get_localcorpus():
             'link': file.name,
         }
         with file.open() as f:
-            doc['kalimat'] = f.readline(100) + '...'
+            doc['kalimat'] = f.readline(200) + '...'
         corpus.append(doc)
         i += 1
     
     return corpus
 
 def get_localcontent(doc):
-    file = Path('data/' + doc['link'])
+    file = Path('data/txt/' + doc['link'])
     with file.open() as f:
         content = f.read()
     return content.replace('\n', ' ')
 
-def getsorted(query):
+def getsortedtxt(query):
     dbArticle = get_localcorpus()
 
     #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
