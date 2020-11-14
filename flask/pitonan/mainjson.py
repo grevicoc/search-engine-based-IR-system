@@ -1,4 +1,5 @@
 from pitonan.tfidf import *
+import pandas as pd
 import json
 
 def getsorted(query):
@@ -43,7 +44,32 @@ def getsorted(query):
 
     return dbArticle
 
+def tablemaker(query):
+    #Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
+    with open('data/json/dbDokumen.txt') as fin:
+        dbDokumen = json.load(fin)
 
+    #Membaca dbArticle.txt untuk mendapatkan data berupa judul, link, dan kalimat pertama dari masing-masing artikel
+    with open('data/json/dbArticle.txt') as fin:
+        dbArticle = json.load(fin)
+
+    #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
+    stemmed_content = [stem(dokumen) for dokumen in dbDokumen] 
+
+    stemmed_content.append(stem(query))
+
+    kolom_vect = setkata(stemmed_content)
+    del stemmed_content[-1]
+
+
+    contents_wcount = [wordcount(content, kolom_vect) for content in stemmed_content]
+
+    kolque = setkata([stem(query)])
+    df = pd.DataFrame.from_records(contents_wcount)
+    df = df[df.columns.intersection(list(kolque))]
+    df = df.rename(index=lambda s:'D'+str(s))
+
+    return df
 
 
 

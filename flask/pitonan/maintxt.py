@@ -59,3 +59,22 @@ def getsortedtxt(query):
     dbArticle = sorted(dbArticle, key = lambda i: i['similarity'],reverse=True)
 
     return dbArticle
+
+def tablemakertxt(query):
+    dbArticle = get_localcorpus()
+
+    #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
+    stemmed_content = [stem(get_localcontent(dokumen)) for dokumen in dbArticle] 
+
+    stemmed_content.append(stem(query))
+
+    kolom_vect = setkata(stemmed_content)
+    del stemmed_content[-1]
+    contents_wcount = [wordcount(content, kolom_vect) for content in stemmed_content]
+    
+    kolque = setkata([stem(query)])
+    df = pd.DataFrame.from_records(contents_wcount)
+    df = df[df.columns.intersection(list(kolque))]
+    df = df.rename(index=lambda s:'D'+str(s))
+
+    return df
