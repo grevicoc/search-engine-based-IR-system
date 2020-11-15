@@ -7,6 +7,22 @@ p {
     font-size: 1rem;
 }
 
-#radio-label {
-    
+a { 
+    color: #000000; 
+} /* CSS link color */
+
+table {
+    width:100%;
+    border:1px solid $color-form-highlight;
+}
+
+.form-check.form-check-inline.mx-auto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ml-1.mt-2.mr-1{
+    padding-left: 10px;
+    padding-right: 10px;
 }
