@@ -75,6 +75,11 @@ def tablemakertxt(query):
     kolque = setkata([stem(query)])
     df = pd.DataFrame.from_records(contents_wcount)
     df = df[df.columns.intersection(list(kolque))]
-    df = df.rename(index=lambda s:'D'+str(s))
+    for i in range(len(dbArticle)):
+        df = df.rename(index = { i : '<a href="{}">{}</a>'.format("/txt/"+dbArticle[i]["link"],'D'+str(i+1))})
+        
+    return df
+
+
 
     return df
