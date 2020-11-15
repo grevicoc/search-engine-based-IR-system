@@ -66,5 +66,12 @@ Tunggu beberapa saat, jika sudah terdapat tampilan
 ```
 Maka anda dapat mengakses alamat webpage tersebut menggunakan browser anda (dalam kasus ini alamat : http://127.0.0.1:5000/ ) .\
 Lalu akan muncul tampilan :
+![homepage](./ss/webpagebase.png)
 
 
+Setelah itu anda dapat memasukkan search query pada search bar yang tersedia, dan memilih salah satu diantara 4 opsi output yang tersedia .\
+Untuk mengunggah file .txt, pastikan anda berada di homepage lalu tekan button "upload files" lalu "browse" dan tekan "upload" .\
+Anda juga dapat menghapus semua file .txt yang sudah di upload menggunakan button "delete files".\
+
+Selamat menikmati!.\
+"
