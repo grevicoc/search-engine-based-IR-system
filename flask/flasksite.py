@@ -64,7 +64,10 @@ def txt(txt_name):
     except FileNotFoundError:
         abort(404)
 
-
+@app.route('/about')
+def about():
+    
+    return render_template('about.html')
 
 if __name__ == "__main__":
     app.secret_key = '12345'

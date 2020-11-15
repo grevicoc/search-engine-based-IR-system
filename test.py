@@ -4,11 +4,11 @@ import json
 query = "covid-19 vaccine"
 
 #Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
-with open('dbDokumen.txt') as fin:
+with open('flask/data/json/dbDokumen.txt') as fin:
     dbDokumen = json.load(fin)
 
 #Membaca dbArticle.txt untuk mendapatkan data berupa judul, link, dan kalimat pertama dari masing-masing artikel
-with open('dbArticle.txt') as fin:
+with open('flask/data/json/dbArticle.txt') as fin:
     dbArticle = json.load(fin)
 
 #memasukkan hasil stemming per dokumen ke dalam list stemmed_content

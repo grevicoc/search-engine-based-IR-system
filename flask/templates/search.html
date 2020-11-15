@@ -16,7 +16,7 @@
 </form>
 {% for doc in docs %}
 <div class="container">
-    <h4>{{ doc.judul }}</h4>
+    <h4>{{ doc.judul }} (similarity : {{doc.similarity}})</h4>
     <a href={{doc.link}}><p class="text-truncate mb-1">{{ doc.link }}</p></a>
     <p>{{ doc.kalimat }}</p>
 

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="how-to-use">
+    <h2>
+        How to Use:
+    </h2>    
+    <ol>
+        <li>Pilih tipe data dan sumber data yang ingin ditampilkan di bawah kolom pencarian (apakah dari Webscraper atau local, apakah ingin menampilkan kemunculan kata atau hasil pencarian)</li>
+        <li>Masukkan query kata yang ingin anda cari</li>
+        <li>Klik enter.</li>
+    </ol>
+</div>
+
+<div class="about-us">
+    <h2>
+        About Us:
+    </h2>
+    <p>
+        Aplikasi ini merupakan tugas besar dari mata kuliah IF2123 Teknik Informatika ITB. Aplikasi kami memanfaatkan teknik dot-product pada sistem temu balik informasi. Singkatnya, kata pada query akan diubah menjadi ruang vektor dan masing-masing dokumen akan memiliki vektor di ruang tersebut, selanjutnya vektor query dan vektor dokumen akan dilihat kemiripannya dengan menghitung cos similarity-nya. 
+    </p>
+    <p>
+        Aplikasi ini disusun oleh kelompok "ya Allah" yang beranggotakan:
+        <ol>
+            <li>Muhammad Tito Prakasa 13519007</li>
+            <li>Mohammad Sheva Almeyda Sofjan 13519018</li>
+            <li>Aditya Bimawan 13519064</li>
+        </ol>
+    </p>
+</div>
+
+{% endblock %}
