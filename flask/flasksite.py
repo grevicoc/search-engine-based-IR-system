@@ -36,24 +36,11 @@ def search():
     elif request.method == 'GET' and form.validate() and form.searchtype.data == 'table2':
         form = searchForm(request.args)
         df = tablemakertxt(form.query.data)
-        '''html = 
-        <html>
-            <head><title>HTML Pandas Dataframe with CSS</title></head>
-                <link rel="stylesheet" type="text/css" href="../static/df_style.css"/>
-            <body>
-                {table}
-             </body>
-        </html>.
-        
-        pd.set_option('colheader_justify', 'center')
-        text_file = open("./templates/table.html", "w")
-        text_file.write(html.format(table=df.to_html(classes='mystyle')))
-        text_file.close()'''
-        return render_template('table.html',form = form,table = df.to_html())
+        return render_template('table.html',form = form,table = df.to_html(escape=False))
     elif request.method == 'GET' and form.validate() and form.searchtype.data == 'table1':
         form = searchForm(request.args)
         df = tablemaker(form.query.data)
-        return render_template('table.html',form = form,table = df.to_html())
+        return render_template('table.html',form = form,table = df.to_html(escape = False))
     else:
         return redirect('/')
 
