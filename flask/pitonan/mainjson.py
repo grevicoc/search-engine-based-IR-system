@@ -78,10 +78,18 @@ def tablemaker(query):
     contents_wcount, dbArticle = zip(*sorted(zip(contents_wcount, dbArticle), key=lambda wc: similarity(wc[0], tiq, idf_vect), reverse=True))
 
     kolque = setkata([stem(query)])
+    quecount = [wordcount(stem(query),kolque)]
+    dq = pd.DataFrame.from_records(quecount)
     df = pd.DataFrame.from_records(contents_wcount)
+    df = dq.append(df, ignore_index=True)
     df = df[df.columns.intersection(list(kolque))]
-    for i in range(len(dbArticle)):
-        df = df.rename(index = { i : '<a href="{}">{}</a>'.format(dbArticle[i]["link"],'rank '+str(i+1))})
+
+    df = df.rename(index = { 0 : 'Q'})
+
+    for i in range(1,len(dbArticle)+1):
+        df = df.rename(index = { i : '<a href="{}">{}</a>'.format(dbArticle[i-1]["link"],'D'+str(i))})
+    
+    df = df.T
 
     return df
 

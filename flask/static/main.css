@@ -11,9 +11,14 @@ a {
     color: #000000; 
 } /* CSS link color */
 
-table {
-    width:100%;
-    border:1px solid $color-form-highlight;
+table { 
+    table-layout:fixed;
+}
+
+td { 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    word-wrap: break-word;
 }
 
 .form-check.form-check-inline.mx-auto{

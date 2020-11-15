@@ -73,13 +73,16 @@ def tablemakertxt(query):
     contents_wcount = [wordcount(content, kolom_vect) for content in stemmed_content]
     
     kolque = setkata([stem(query)])
+    quecount = [wordcount(stem(query),kolque)]
+    dq = pd.DataFrame.from_records(quecount)
     df = pd.DataFrame.from_records(contents_wcount)
+    df = dq.append(df, ignore_index=True)
     df = df[df.columns.intersection(list(kolque))]
-    for i in range(len(dbArticle)):
-        df = df.rename(index = { i : '<a href="{}">{}</a>'.format("/txt/"+dbArticle[i]["link"],'rank '+str(i+1))})
+    df = df.rename(index = { 0 : 'Q'})
+    for i in range(1,len(dbArticle)+1):
+        df = df.rename(index = { i : '<a href="{}">{}</a>'.format("/txt/"+dbArticle[i-1]["link"],'D'+str(i))})
+    
+    df = df.T
         
     return df
 
-
-
-    return df
