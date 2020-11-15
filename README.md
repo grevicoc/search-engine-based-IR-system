@@ -73,5 +73,15 @@ Setelah itu anda dapat memasukkan search query pada search bar yang tersedia, da
 Untuk mengunggah file .txt, pastikan anda berada di homepage lalu tekan button "upload files" lalu "browse" dan tekan "upload" .\
 Anda juga dapat menghapus semua file .txt yang sudah di upload menggunakan button "delete files".\
 
+# Cara Memperbarui Dokumen Hasil Webscrape
+Untuk melakukan aksi ini diperlukan satu package tambahan, yaitu:
+
+### beautifulsoup4
+`pip install beautifulsoup4`
+
+Selanjutnya, pastikan terminal anda sudah berada di directory "Algeo02-19007". Selanjutnya ketik "cd src" tanpa kutip di terminal anda
+lalu enter. Setelah itu jalankan program "webscraper.py" dengan cara ketikkan di terminal anda "python webscraper.py". Tunggu hingga
+proses webscraping selesai dan voila! dokumen data di src/data/json/*.txt anda sudah diperbarui.
+
 Selamat menikmati!.\
-"
+
