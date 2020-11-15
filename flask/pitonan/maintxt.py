@@ -61,7 +61,7 @@ def getsortedtxt(query):
     return dbArticle
 
 def tablemakertxt(query):
-    dbArticle = get_localcorpus()
+    dbArticle = getsortedtxt(query)
 
     #memasukkan hasil stemming per dokumen ke dalam list stemmed_content
     stemmed_content = [stem(get_localcontent(dokumen)) for dokumen in dbArticle] 
@@ -76,7 +76,7 @@ def tablemakertxt(query):
     df = pd.DataFrame.from_records(contents_wcount)
     df = df[df.columns.intersection(list(kolque))]
     for i in range(len(dbArticle)):
-        df = df.rename(index = { i : '<a href="{}">{}</a>'.format("/txt/"+dbArticle[i]["link"],'D'+str(i+1))})
+        df = df.rename(index = { i : '<a href="{}">{}</a>'.format("/txt/"+dbArticle[i]["link"],'rank '+str(i+1))})
         
     return df
 

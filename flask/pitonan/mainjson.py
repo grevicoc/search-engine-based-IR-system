@@ -44,6 +44,10 @@ def getsorted(query):
 
     return dbArticle
 
+def similarity(wcount, tiq, idfvect):
+    a = cosine_sim(tiq, tf_idf(tf(wcount), idfvect))
+    return a
+
 def tablemaker(query):
     #Membaca dbDokumen.txt untuk mendapatkan isi konten artikel
     with open('data/json/dbDokumen.txt') as fin:
@@ -62,13 +66,22 @@ def tablemaker(query):
     del stemmed_content[-1]
 
 
+
     contents_wcount = [wordcount(content, kolom_vect) for content in stemmed_content]
+
+    idf_vect = idfvect(contents_wcount)
+    #print(contents_wcount)
+
+    vect_query = tf(wordcount(stem(query), kolom_vect))
+    tiq = tf_idf(vect_query,idf_vect)
+
+    contents_wcount, dbArticle = zip(*sorted(zip(contents_wcount, dbArticle), key=lambda wc: similarity(wc[0], tiq, idf_vect), reverse=True))
 
     kolque = setkata([stem(query)])
     df = pd.DataFrame.from_records(contents_wcount)
     df = df[df.columns.intersection(list(kolque))]
     for i in range(len(dbArticle)):
-        df = df.rename(index = { i : '<a href="{}">{}</a>'.format(dbArticle[i]["link"],'D'+str(i+1))})
+        df = df.rename(index = { i : '<a href="{}">{}</a>'.format(dbArticle[i]["link"],'rank '+str(i+1))})
 
     return df
 
