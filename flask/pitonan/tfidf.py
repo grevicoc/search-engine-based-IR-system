@@ -1,8 +1,6 @@
 from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-import numpy as np
-import operator
 import pandas as pd
 import math
 import re

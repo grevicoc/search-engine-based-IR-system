@@ -2,3 +2,5 @@
 __pycache__/
 __pycache__/tfidf.cpython-38.pyc
 flask/__pycache__/
+.vscode/
+**/__pycache__/
