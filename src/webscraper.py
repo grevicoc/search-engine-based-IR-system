@@ -57,10 +57,10 @@ mainDokumen = [isiKonten(dokumen['link']) for dokumen in listMainArticle]
 
 
 #Untuk meminimalisasi waktu, kami simpan konten tiap artikel ke dalam dbDokumen.txt
-with open('dbDokumen.txt', 'w') as fout:       
+with open('flask/data/json/dbDokumen.txt', 'w') as fout:       
     json.dump(mainDokumen, fout)
 
 #Sedangkan list of dict dari data tiap artikelnya disimpan ke dalam dbArticle.txt 
-with open('dbArticle.txt', 'w') as fout:
+with open('flask/data/json/dbArticle.txt', 'w') as fout:
     json.dump(listMainArticle, fout)    
     

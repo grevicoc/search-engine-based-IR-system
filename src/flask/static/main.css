@@ -31,3 +31,20 @@ td {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.button-search, .button-upload{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn.btn-primary, .mt-2.btn.btn-sm.btn-secondary{
+    position: relative;
+}
+
+.button-upload-html{
+    text-align: center;
+}
+
+.form-file-chosen{
+    margin-top: 20px;
+}

@@ -13,8 +13,12 @@
             <div class="ml-1 mt-2 mr-1">{{ subfield.label }}</div>
         {% endfor %}
     </div>
-    <button type=submit class="btn btn-primary">Search</button>
+    <div class="button-search">
+        <button type=submit class="btn btn-primary">Search</button>
+    </div>
 </form>
-<a href="{{ url_for('upload') }}"><button class="mt-2 btn btn-sm btn-secondary">Upload Files</button></a>
+<div class="button-upload">
+    <a href="{{ url_for('upload') }}"><button class="mt-2 btn btn-sm btn-secondary">Upload Files</button></a>
+</div>
 
 {% endblock %}
